@@ -40,6 +40,7 @@ services:
       - NODE_ENV=${NODE_ENV}
       - DATABASE_URL=${PRODUCTS_MS_DATABASE_URL}
       - PORT=${PRODUCTS_MS_PORT}
+      - HOST=${PRODUCTS_MS_HOST}
     depends_on:
       - products-db
 
@@ -53,6 +54,7 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV}
       - PORT=${ORDERS_MS_PORT}
+      - HOST=${ORDERS_MS_HOST}
       - DATABASE_URL=${ORDERS_MS_DATABASE_URL}
       - PRODUCTS_MS_HOST=${PRODUCTS_MS_HOST}
       - PRODUCTS_MS_PORT=${PRODUCTS_MS_PORT}
