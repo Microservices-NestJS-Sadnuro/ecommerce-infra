@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # Base de Datos para Productos
+  products-db:
+    container_name: products_database
+    image: postgres:16.2
+    restart: always
+    environment:
+      - POSTGRES_USER=${PRODUCTS_DB_USER}
+      - POSTGRES_PASSWORD=${PRODUCTS_DB_PASSWORD}
+      - POSTGRES_DB=${PRODUCTS_DB_NAME}
+    ports:
+      - "${PRODUCTS_DB_PORT}:5432"
+    volumes:
+      - products-data:/var/lib/postgresql/data
+
+  # Base de Datos para Órdenes
+  orders-db:
+    container_name: orders_database
+    image: postgres:16.2
+    restart: always
+    environment:
+      - POSTGRES_USER=${ORDERS_DB_USER}
+      - POSTGRES_PASSWORD=${ORDERS_DB_PASSWORD}
+      - POSTGRES_DB=${ORDERS_DB_NAME}
+    ports:
+      - "${ORDERS_DB_PORT}:5432"
+    volumes:
+      - orders-data:/var/lib/postgresql/data
+
+  # Microservicio de Productos
+  products-ms:
+    container_name: products-ms
+    build:
+      context: ../products-ms
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DATABASE_URL=${PRODUCTS_MS_DATABASE_URL}
+      - PORT=${PRODUCTS_MS_PORT}
+    depends_on:
+      - products-db
+
+  # Microservicio de Órdenes
+  orders-ms:
+    container_name: orders-ms
+    build:
+      context: ../orders-ms
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${ORDERS_MS_PORT}
+      - DATABASE_URL=${ORDERS_MS_DATABASE_URL}
+      - PRODUCTS_MS_HOST=${PRODUCTS_MS_HOST}
+      - PRODUCTS_MS_PORT=${PRODUCTS_MS_PORT}
+    depends_on:
+      - orders-db
+
+  # API Gateway
+  client-gateway:
+    container_name: client-gateway
+    build:
+      context: ../client-gateway
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "${CLIENT_GATEWAY_PORT}:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${CLIENT_GATEWAY_PORT}
+      - PRODUCTS_MS_HOST=${PRODUCTS_MS_HOST}
+      - PRODUCTS_MS_PORT=${PRODUCTS_MS_PORT}
+      - ORDERS_MS_HOST=${ORDERS_MS_HOST}
+      - ORDERS_MS_PORT=${ORDERS_MS_PORT}
+    depends_on:
+      - products-ms
+      - orders-ms
+
+volumes:
+  products-data:
+  orders-data:
