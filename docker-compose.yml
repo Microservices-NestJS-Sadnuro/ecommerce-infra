@@ -63,7 +63,7 @@ services:
   client-gateway:
     container_name: client-gateway
     build:
-      context: ../client-gateway
+      context: ../client-gateway-ms
       dockerfile: Dockerfile
     restart: always
     ports:
