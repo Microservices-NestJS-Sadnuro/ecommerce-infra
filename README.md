@@ -10,3 +10,8 @@ Este proyecto aprovisiona toda la arquitectura local (bases de datos y microserv
    git clone https://github.com/MI-ORG/products-ms.git
    git clone https://github.com/MI-ORG/orders-ms.git
    git clone https://github.com/MI-ORG/ecommerce-infra.git
+
+2. Ejecutar construccion de imagenes y ejecucion del proyecto
+   ```bash
+   docker-compose up --build -d
+   ```
