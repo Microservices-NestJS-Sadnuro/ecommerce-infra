@@ -82,6 +82,9 @@ Los datos de ambas bases de datos se mantienen en **Docker Volumes nombrados** (
    ```bash
    http://localhost:3000/api/docs
    ```
+5. Descargar e importar la coleccion de API Resquests:
+   - Postman: https://drive.google.com/file/d/1D8UCCD6_4S9DkxZ5P06zacA8EyQ-cU7A/view?usp=sharing
+   - Insomnia: https://drive.google.com/file/d/1OqCvVd9NqeBZy8T-B9vYAA379-ppYqiH/view?usp=sharing
 
 5. Realizar peticiones sobre los endpoints del Api Gateway para verificar funcionalidades
    
