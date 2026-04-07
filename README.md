@@ -73,12 +73,17 @@ Los datos de ambas bases de datos se mantienen en **Docker Volumes nombrados** (
    docker-compose up --build
    ```
 
-3. Acceder a documentacion del Api Gateway para verificar que el servicio esté activo
+3. Ejecutar seed para insertar registros iniciales en la base de datos de productos
+   ```bash
+   docker exec -it products-ms npm run db:seed
+   ```
+
+4. Acceder a documentacion del Api Gateway para verificar que el servicio esté activo
    ```bash
    http://localhost:3000/api/docs
    ```
 
-4. Realizar peticiones sobre los endpoints del Api Gateway para verificar funcionalidades
+5. Realizar peticiones sobre los endpoints del Api Gateway para verificar funcionalidades
    
 ---
 
